@@ -25,6 +25,8 @@ builder.Services.AddDbContext<BethanysPieShopDbContext>(option =>
         builder.Configuration["ConnectionStrings:BethanysPieShopDbContextConnection"]);
 });
 
+builder.Services.AddServerSideBlazor();
+
 var app = builder.Build();
 
 app.UseStaticFiles();
@@ -37,5 +39,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/app/{*catchall}", "/App/Index");
+
 DbInitializer.Seed(app);
 app.Run();
